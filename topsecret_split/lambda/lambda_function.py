@@ -11,7 +11,7 @@ from constants import Constants
 
 class LambdaExecution():
     """Class with all lambda execution"""
-    
+
     def __init__(self, factory: CacheAdapter):
         """Contructor LambdaExecution"""
         self.factory = factory
@@ -29,17 +29,20 @@ class LambdaExecution():
             "multiValueHeaders": {},
             "body": {}
         }
-        
-        kenoby = bool(self.factory.valid_key(Constants.kenoby['satellite_name']))
-        skywalker = bool(self.factory.valid_key(Constants.skywalker['satellite_name']))
-        sato = bool(self.factory.valid_key(Constants.sato['satellite_name']))
+
+        kenoby = bool(self.factory.valid_key(
+            Constants.kenoby['satellite_name']))
+        skywalker = bool(self.factory.valid_key(
+            Constants.skywalker['satellite_name']))
+        sato = bool(self.factory.valid_key(
+            Constants.sato['satellite_name']))
 
         if(kenoby is not True or skywalker is not True or sato is not True):
 
             response['statusCode'] = HTTPStatus.BAD_REQUEST
             response['body'] = "Missing some locations."
             return response
-        
+
         kenoby = json.loads(
             self.factory.get_data(
                 Constants.kenoby['satellite_name']))
@@ -49,7 +52,6 @@ class LambdaExecution():
         sato = json.loads(
             self.factory.get_data(
                 Constants.sato['satellite_name']))
-
 
         if (len(kenoby['message']) != len(skywalker['message'])
            or len(skywalker['message']) != len(sato['message'])):
@@ -64,7 +66,7 @@ class LambdaExecution():
         )
 
         response['body'] = {
-            'location': {'x': location[0], 'y':location[1]},
+            'location': {'x': location[0], 'y': location[1]},
             'message': PostitionUtils().get_message(kenoby['message'],
                                                     skywalker['message'],
                                                     sato['message'])
@@ -88,7 +90,7 @@ def lambda_handler(event, context):
     url = os.environ.get('cache_url')
     redis = RedisBroker(url)
     lambda_exec = LambdaExecution(redis)
-    
+
     try:
         if(event['httpMethod'] == "POST"):
             lambda_exec.execute_post(str(event['body']),

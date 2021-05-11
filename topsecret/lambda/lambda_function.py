@@ -20,7 +20,7 @@ class LambdaExecution():
         }
         
         try:
-            #params = json.loads(str(params))
+            params = json.loads(str(params))
             data =  params['satellites']
             
             if(len(data) != 3):
