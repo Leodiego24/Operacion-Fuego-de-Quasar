@@ -2,18 +2,18 @@ import abc
 
 
 class CacheAdapter(abc.ABC):
-
+    """Interface with cache adapter definition"""
     @abc.abstractmethod
     def set_data(self, key, value):
-        """ Get parameter"""
+        """ Set data in cachedb"""
         raise NotImplementedError
 
     @abc.abstractmethod
     def get_data(self, key):
-        """ Get parameter"""
+        """ Get data in cachedb"""
         raise NotImplementedError 
 
     @abc.abstractmethod
     def valid_key(self, key):
-        """ Get parameter"""
+        """ Valid data in cachedb"""
         raise NotImplementedError

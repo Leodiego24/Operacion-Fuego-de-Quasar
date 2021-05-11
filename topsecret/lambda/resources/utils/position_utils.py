@@ -4,8 +4,10 @@ from constants import Constants
 
 
 class PostitionUtils():
+    """Class with all utils to locations"""
 
     def get_locations(self, r1,r2,r3):
+        """Get location of sender"""
         x1 = Constants.kenoby['position']['x']
         y1 = Constants.kenoby['position']['y']
         x2 = Constants.skywalker['position']['x']
@@ -23,6 +25,7 @@ class PostitionUtils():
         return x,y
 
     def get_message(self, message1, message2, message3):
+        """Get message of sender"""
         message = []
         length = len(message)
         for i in range(len(message1)):

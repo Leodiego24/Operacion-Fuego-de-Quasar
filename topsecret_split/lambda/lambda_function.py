@@ -10,14 +10,18 @@ from constants import Constants
 
 
 class LambdaExecution():
-
+    """Class with all lambda execution"""
+    
     def __init__(self, factory: CacheAdapter):
+        """Contructor LambdaExecution"""
         self.factory = factory
 
     def execute_post(self, body, name):
+        """Method with post execution"""
         self.factory.set_data(name, body)
 
     def execute_get(self):
+        """Method with get definition"""
         response = {
             "isBase64Encoded": True,
             "statusCode": HTTPStatus.OK,
@@ -72,6 +76,7 @@ class LambdaExecution():
 
 
 def lambda_handler(event, context):
+    """Lambda handler"""
     response = {
         "isBase64Encoded": True,
         "statusCode": HTTPStatus.OK,

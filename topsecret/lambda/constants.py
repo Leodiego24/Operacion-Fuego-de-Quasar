@@ -1,4 +1,5 @@
 class Constants():
+    """Define all constants in project"""
     kenoby = {
         'satellite_name': 'kenoby',
         "position": {"x": -500.0,"y": -200.0}
