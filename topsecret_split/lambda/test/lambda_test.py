@@ -47,30 +47,32 @@ class TestLambdaFunctionSplit(unittest.TestCase):
     def __init__(self, methodName='runTest', param=None) -> None:
         """Contructor of test case"""
         super().__init__(methodName=methodName)
-        redis_url = "ec2-18-205-237-199.compute-1.amazonaws.com"
+        redis_url = "ec2-34-228-141-225.compute-1.amazonaws.com"
         redis = RedisBroker(redis_url)
         self.lambda_exec = LambdaExecution(redis)
 
     def test_post_kenoby(self):
         """Test case save kenoby"""
-        response = self.lambda_exec.execute_post("kenoby", json.dumps(self.kenoby))
+        response = self.lambda_exec.execute_post(json.dumps(self.kenoby), "kenoby")
         self.assertEqual(response['statusCode'], HTTPStatus.OK)
 
     def test_post_skywalker(self):
         """Test case save skywalker"""
-        response = self.lambda_exec.execute_post("skywalker", json.dumps(self.skywalker))
+        response = self.lambda_exec.execute_post(json.dumps(self.skywalker), "skywalker")
         self.assertEqual(response['statusCode'], HTTPStatus.OK)
 
     def test_post_sato(self):
         """Test case save sato"""
-        response = self.lambda_exec.execute_post("sato", json.dumps(self.sato))
+        response = self.lambda_exec.execute_post(json.dumps(self.sato), "sato")
         self.assertEqual(response['statusCode'], HTTPStatus.OK)
 
     def test_correct(self):
         """Test case validation correct"""
+        self.lambda_exec.execute_post(json.dumps(self.kenoby), "kenoby")
+        self.lambda_exec.execute_post(json.dumps(self.skywalker), "skywalker")
+        self.lambda_exec.execute_post(json.dumps(self.sato), "sato")
         response = self.lambda_exec.execute_get()
         self.assertEqual(response['statusCode'], HTTPStatus.OK)
-
 
 
 if __name__ == "__main__":

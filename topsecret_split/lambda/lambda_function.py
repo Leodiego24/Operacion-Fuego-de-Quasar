@@ -12,6 +12,14 @@ from constants import Constants
 class LambdaExecution():
     """Class with all lambda execution"""
 
+    template_reponse = {
+            "isBase64Encoded": True,
+            "statusCode": HTTPStatus.OK,
+            "headers": {},
+            "multiValueHeaders": {},
+            "body": ""
+        }
+
     def __init__(self, factory: CacheAdapter):
         """Contructor LambdaExecution"""
         self.factory = factory
@@ -19,16 +27,11 @@ class LambdaExecution():
     def execute_post(self, body, name):
         """Method with post execution"""
         self.factory.set_data(name, body)
+        return self.template_reponse
 
     def execute_get(self):
         """Method with get definition"""
-        response = {
-            "isBase64Encoded": True,
-            "statusCode": HTTPStatus.OK,
-            "headers": {},
-            "multiValueHeaders": {},
-            "body": {}
-        }
+        response = self.template_reponse
 
         kenoby = bool(self.factory.valid_key(
             Constants.kenoby['satellite_name']))
